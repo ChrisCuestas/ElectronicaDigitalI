@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Institute: Universidad Nacional del Colombia
-// Subject: Laboratorio de Electrónica Digital I / 2018-01
-// Student: Christian Cuestas
+// Subject: Laboratorio de Electrónica Digital I 2018-01 Grupo 2016498-1
+// Student: Christian Camilo Cuestas, Eliana Ortiz García yJuan David Gonzalez Muñoz
 // 
 // Create Date:    09:27:06 03/20/2018 
 // Design Name: Sumador de 3 bits
