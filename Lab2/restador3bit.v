@@ -4,9 +4,9 @@
 // Subject: Laboratorio de Electrónica Digital I 2018-01 Grupo 2016498-1
 // Student: Christian Camilo Cuestas, Eliana Ortiz García y Juan David Gonzalez Muñoz
 // 
-// Create Date:    09:27:06 03/20/2018 
-// Design Name: Sumador de 3 bits
-// Module Name:    sumador3bit 
+// Create Date:    15:40:00 04/04/2018 
+// Design Name: Restador de 3 bits
+// Module Name:    restador3bit 
 // Project Name: Laboratorio 2
 // Target Devices: Nexys 4
 // Tool versions: Nexys 4
@@ -18,17 +18,17 @@ module sumador3bit(
 	input [0: 2] A, B,
 	input [0:7] anodes, 
 );
-   reg [0: 3] SUM;
+	reg [0: 3] RES;
    
 	always@(*)
 	begin
-		SUM <= A + B;
+		RES <= A - B;
 	end
 	
-	always @(SUM)
+	always @(RES)
 	begin
-		//Para mostrar la suma en hexadecimal en el display 7-seg
-		case( SUM )
+		//Para mostrar la resta en hexadecimal en el display 7-seg
+		case( RES )
 			4'b0000: disp <= 7'b0100000;
 			4'b0001: disp <= 7'b1111001;
 			4'b0010: disp <= 7'b0100100;
