@@ -16,7 +16,7 @@
 module sumador3bit(
    output reg [6:0] disp,
 	input [0: 2] A, B,
-	input [0:7] anodes, 
+	output reg [0:7] anodes
 );
    reg [0: 3] SUM;
    
