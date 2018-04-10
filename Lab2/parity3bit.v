@@ -27,16 +27,16 @@ module parity3bit(
 		CONC <= {A,B};
 	end
 	
-	paridadBit #(.length(6)) paridadBit0 ( .cadena(CONC),	.paridad(PAR));
+	paridadBit paridadBit0 ( .cadena(CONC),	.paridad(PAR));
 	
 	always @(PAR)
 	begin
 		if(PAR==1'b0)
-			disp <= 7'b0100000;
+			disp <= 7'b1000000;
 		else
 			disp <= 7'b1111001;
 			
-		anodes <= 8'b00000001;	//Para que sólo prenda el dígito de la derecha
+		anodes <= 8'b11111110;	//Para que sólo prenda el dígito de la derecha
 	end
 
 endmodule

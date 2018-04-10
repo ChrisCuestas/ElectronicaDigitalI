@@ -13,39 +13,61 @@
 // Description: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module sumador3bit(
-   output reg [6:0] disp,
+module restador3bit(
+   output reg [7:0] disp,
 	input [0: 2] A, B,
-	input [0:7] anodes, 
+	output reg [0:7] anodes 
 );
 	reg [0: 3] RES;
+	reg sign =1'b1;
    
 	always@(*)
 	begin
-		RES <= A - B;
+		if(A>B)
+			RES <= A - B;
+		else
+		begin
+			RES <= B - A;
+			sign <= 1'b1;
+		end
 	end
 	
 	always @(RES)
 	begin
 		//Para mostrar la resta en hexadecimal en el display 7-seg
-		case( RES )
-			4'b0000: disp <= 7'b0100000;
-			4'b0001: disp <= 7'b1111001;
-			4'b0010: disp <= 7'b0100100;
-			4'b0011: disp <= 7'b0000110;
-			4'b0100: disp <= 7'b0011001;
-			4'b0101: disp <= 7'b0010010;
-			4'b0110: disp <= 7'b0000010;
-			4'b0111: disp <= 7'b1111000;
-			4'b1000: disp <= 7'b0000000;
-			4'b1001: disp <= 7'b0010000;
-			4'b1010: disp <= 7'b0001000;
-			4'b1011: disp <= 7'b0000011;
-			4'b1100: disp <= 7'b1000110;
-			4'b1101: disp <= 7'b0100001;
-			4'b1110: disp <= 7'b0000110;
+		case( {sign,RES} )
+			5'b00000: disp <= 7'b1000000;
+			5'b00001: disp <= 7'b1111001;
+			5'b00010: disp <= 7'b0100100;
+			5'b00011: disp <= 7'b0110000;
+			5'b00100: disp <= 7'b0011001;
+			5'b00101: disp <= 7'b0010010;
+			5'b00110: disp <= 7'b0000010;
+			5'b00111: disp <= 7'b1111000;
+			5'b01000: disp <= 7'b0000000;
+			5'b01001: disp <= 7'b0010000;
+			5'b01010: disp <= 7'b0001000;
+			5'b01011: disp <= 7'b0000011;
+			5'b01100: disp <= 7'b1000110;
+			5'b01101: disp <= 7'b0100001;
+			5'b01110: disp <= 7'b0000110;
+			5'b10000: disp <= 8'b01000000;
+			5'b10001: disp <= 8'b01111001;
+			5'b10010: disp <= 8'b00100100;
+			5'b10011: disp <= 8'b00110000;
+			5'b10100: disp <= 8'b00011001;
+			5'b10101: disp <= 8'b00010010;
+			5'b10110: disp <= 8'b00000010;
+			5'b10111: disp <= 8'b01111000;
+			5'b11000: disp <= 8'b00000000;
+			5'b11001: disp <= 8'b00010000;
+			5'b11010: disp <= 8'b00001000;
+			5'b11011: disp <= 8'b00000011;
+			5'b11100: disp <= 8'b01000110;
+			5'b11101: disp <= 8'b00100001;
+			5'b11110: disp <= 8'b00000110;
 			default: disp <= 7'b1111111;
 		endcase
-		anodes <= 8'b00000001;	//Para que sólo prenda el dígito de la derecha
+		anodes <= 8'b11111110;	//Para que sólo prenda el dígito de la derecha
 	end
 endmodule

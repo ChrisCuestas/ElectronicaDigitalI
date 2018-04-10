@@ -1,20 +1,12 @@
 `timescale 1ns / 1ps
 
-module paridadBit #(parameter length = 2)(
+module paridadBit #(parameter length = 6)(
 		input [0:length-1] cadena,
 		output reg [0:0] paridad
     );
 	 
-	 reg parBit=1'b0;
-	 integer index;
-	 
 	 always @(cadena)
 	 begin
-		parBit <= cadena[0];
-		for(index = 1; index < length; index = index + 1)
-		begin
-			parBit<= parBit^cadena[index];
-		end
-		paridad <= parBit;
+		paridad<= cadena[0]^cadena[1]^cadena[2]^cadena[3]^cadena[4]^cadena[5];
 	 end
 endmodule

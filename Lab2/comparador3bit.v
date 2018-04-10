@@ -34,10 +34,10 @@ module comparador3bit(
 	always @(RES)
 	begin
 		case( RES )
-			4'b0000: disp <= 7'b0100000;
+			4'b0000: disp <= 7'b1000000;
 			4'b0001: disp <= 7'b1111001;
 			4'b0010: disp <= 7'b0100100;
-			4'b0011: disp <= 7'b0000110;
+			4'b0011: disp <= 7'b0110000;
 			4'b0100: disp <= 7'b0011001;
 			4'b0101: disp <= 7'b0010010;
 			4'b0110: disp <= 7'b0000010;
@@ -45,7 +45,7 @@ module comparador3bit(
 			4'b1000: disp <= 7'b0110111;	//Muestra el =, si los numeros son iguales
 			default: disp <= 7'b1111111;	//El display se apaga
 		endcase
-		anodes <= 8'b00000001;	//Para que sólo prenda el dígito de la derecha
+		anodes <= 8'b11111110;	//Para que sólo prenda el dígito de la derecha
 	end
 
 endmodule
