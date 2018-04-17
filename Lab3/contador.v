@@ -2,7 +2,8 @@ module contador
 (
 	input           clk,
 //	input           btn,
-	input 	[1:0]	 sw,
+	input				 reset,
+	input 	[2:0]	 sw,
 	output   [6:0]  seg,
 	output   [3:0]  an
 );
@@ -27,6 +28,7 @@ sevenseg sevenseg0 (
 counter counter0 (
 	.clk(clk),
 	.sw (sw),
+	.reset(reset),
 	.led(counter)
 );
 
