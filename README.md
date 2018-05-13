@@ -3,4 +3,3 @@
 ## Integrantes del grupo:
 - Christian Camilo Cuestas Ibáñez
 - Eliana Ortiz García
-- Juan David Gonzalez Muñoz
