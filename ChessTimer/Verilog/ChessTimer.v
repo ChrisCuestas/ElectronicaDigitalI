@@ -11,27 +11,29 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module ChessTimer(
-	input wire enable,
-	input wire sw0,
-	input wire sw1,
 	input clk,
-	input wire set,
-	input wire min,
-	output lcd
+	input 	wire		enable,
+	input 	wire		reset,
+	input 	wire		set,
+	input 	wire		min,
+	input 	wire		sw0,
+	input 	wire		sw1,
+	output wire	[5:0]	lcd
     );
 
-wire [4:0] min1;
-wire [4:0] seg1;
-wire [4:0] min2;
-wire [4:0] seg2;
+wire [5:0] min1;
+wire [5:0] seg1;
+wire [5:0] min2;
+wire [5:0] seg2;
 
 countSet countSet1 (
-	.enable(enable),
-	.sw0(sw0),
-	.sw1(sw1),
 	.clk(clk),
+	.enable(enable),
+	.reset(reset),
 	.set(set),
 	.min(min),
+	.sw0(sw0),
+	.sw1(sw1),
 	.min1(min1),
 	.seg1(seg1),
 	.min2(min2),

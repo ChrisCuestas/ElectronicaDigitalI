@@ -11,16 +11,17 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module countSet(
-	input wire enable,
-	input wire sw0,
-	input wire sw1,
 	input clk,
+	input wire enable,
+	input wire reset,
 	input wire set,
 	input wire min,
-	output wire [4:0] min1,
-	output wire [4:0] seg1,
-	output wire [4:0] min2,
-	output wire [4:0] seg2
+	input wire sw0,
+	input wire sw1,
+	output wire [5:0] min1,
+	output wire [5:0] seg1,
+	output wire [5:0] min2,
+	output wire [5:0] seg2
     );
 	 
 wire clkOut;
@@ -34,6 +35,7 @@ divFrec #(60) divFrec1 (
 countDown countDown1 (
 	.clk(clkOut),
 	.enable(enable),
+	.reset(reset),
 	.set(set),
 	.min(min),
 	.stop(sw0),
@@ -44,6 +46,7 @@ countDown countDown1 (
 countDown countDown2 (
 	.clk(clkOut),
 	.enable(enable),
+	.reset(reset),
 	.set(set),
 	.min(min),
 	.stop(sw1),

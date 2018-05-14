@@ -13,12 +13,30 @@
 module countDown(
 	input clk,
 	input wire enable,
+	input wire reset,
 	input wire set,
 	input wire min,
 	input wire stop,
-	output reg [4:0] minOut,
-	output reg [4:0] segOut
+	output wire [5:0] minOut,
+	output wire [5:0] segOut
     );
 
+counter counterMin (
+	.clk(clk),
+	.reset(reset),
+	.set(set),
+	.enable(enable),
+	.add(min),
+	.count(minOut)
+);
+
+counter counterSeg (
+	.clk(clk),
+	.reset(reset),
+	.set(set),
+	.enable(enable),
+	.add(0),
+	.count(segOut)
+);
 
 endmodule

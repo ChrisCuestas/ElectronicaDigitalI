@@ -10,7 +10,7 @@
 // Description:
 //
 //////////////////////////////////////////////////////////////////////////////////
-module divFrec #(parameter frec=60)(
+module divFrec #(parameter frec=1)(
 	input wire enable,
 	input clkIn,
 	output clkOut
