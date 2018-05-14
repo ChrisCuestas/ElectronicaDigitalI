@@ -1,5 +1,5 @@
 # CHESS TIMER
-Proyecto de Electrónica Digital I
+Proyecto de Electrónica Digital I / 2018-01
 
 ## Integrantes
 - Christian Camilo Cuestas Ibáñez 
@@ -43,4 +43,4 @@ Un reloj de ajedrez que permita programar el tiempo de partida de cada participa
 	3. Set: Mientras el botón está accionado se permite modificar el tiempo de partida.
 	4. Min: Modifica los minutos del tiempo de partida aumentando en 1 cada vez que sea pulsador.
   
-- Tiene un switch balancín, con el que se determina qué temporizador está activado.
+- Tiene un interruptor de balancín, con el que se determina qué temporizador está activado.
