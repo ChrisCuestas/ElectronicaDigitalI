@@ -1,0 +1,31 @@
+module second_counter ( 
+	input clk, 
+	input reset, 
+	input top_num, 
+	output reg [3:0] sec_num ); 
+
+parameter clk_frequency = 25;
+reg [31:0]cnt; 
+reg [3:0] sec;
+
+
+always @(posedge clk, negedge reset) 
+begin 
+if(!reset)
+begin
+    cnt<=0;  // initialize all internal variables and registers
+    sec<=0;
+end 
+else
+begin
+    if(sec == 0) // latch input when previous count is completed
+        sec<=top_num;
+    if (cnt==clk_frequency) 
+    begin 
+        sec <= sec -1; 
+        cnt<=0; 
+    end 
+    else 
+        cnt <=cnt+1; 
+end
+end
