@@ -10,11 +10,23 @@
 // Description:
 //
 //////////////////////////////////////////////////////////////////////////////////
-module divFrec #(parameter frec=1)(
-	input wire enable,
+module divFrec (
 	input clkIn,
 	output clkOut
     );
 
+reg [23:0] counter;
+
+reg cnt;
+
+always @(negedge clkIn) begin
+	cnt = counter [23]; //Periodo de 10ms
+end
+
+always @(posedge clkIn) begin
+	counter <= counter + 1'b1;
+end
+
+assign clkOut = cnt;
 
 endmodule

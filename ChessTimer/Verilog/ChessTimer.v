@@ -11,41 +11,56 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module ChessTimer(
-	input clk,
-	input 	wire		enable,
-	input 	wire		reset,
-	input 	wire		set,
-	input 	wire		min,
-	input 	wire		sw0,
-	input 	wire		sw1,
-	output wire	[5:0]	lcd
+	input		wire			clk,
+	input 	wire			enable,
+	input 	wire			reset,
+	input 	wire			set,
+	input 	wire			add,
+	input 	wire [1:0]	sw,
+	output	wire [5:0]	lcd
     );
 
-wire [5:0] min1;
-wire [5:0] seg1;
-wire [5:0] min2;
-wire [5:0] seg2;
+wire 	setTime;
+wire	count;
 
-countSet countSet1 (
-	.clk(clk),
+wire [5:0] min;
+
+wire [5:0] min1;
+wire [5:0] sec1;
+wire [5:0] min2;
+wire [5:0] sec2;
+
+control control0 (
 	.enable(enable),
 	.reset(reset),
 	.set(set),
-	.min(min),
-	.sw0(sw0),
-	.sw1(sw1),
-	.min1(min1),
-	.seg1(seg1),
-	.min2(min2),
-	.seg2(seg2)
+	.setTime(setTime),
+	.count(count)
 );
 
-multiplexor multiplexor1 (
+setTime setTime0 (
+	.enable(enable),
+	.add(add),
+	.min(min)
+);
+
+countDown countDown0 (
 	.clk(clk),
+	.enable(count),
+	.timeIn(min),
+	.player1(sw[0]),
+	.player2(sw[1]),
 	.min1(min1),
-	.seg1(seg1),
+	.sec1(sec1),
 	.min2(min2),
-	.seg2(seg2),
+	.sec2(sec2)
+);
+
+LCDcontrol LCDcontrol0(
+	.clk(clk),
+	.setTime(setTime),
+	.timeIn(min),
+	.countedTime({min1,sec1,min2,sec2}),
 	.lcd(lcd)
 );
 

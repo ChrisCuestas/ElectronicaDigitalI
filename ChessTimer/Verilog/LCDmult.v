@@ -12,12 +12,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 module LCDmult(
 	input clk,
-	input wire [4:0] min1,
-	input wire [4:0] seg1,
-	input wire [4:0] min2,
-	input wire [4:0] seg2,
+	input wire [5:0] min1,
+	input wire [5:0] seg1,
+	input wire [5:0] min2,
+	input wire [5:0] seg2,
 	output wire	[5:0]	lcd
     );
+
 
 
 endmodule

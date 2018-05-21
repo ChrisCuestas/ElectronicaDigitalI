@@ -13,30 +13,39 @@
 module countDown(
 	input clk,
 	input wire enable,
-	input wire reset,
-	input wire set,
-	input wire min,
-	input wire stop,
-	output wire [5:0] minOut,
-	output wire [5:0] segOut
+	input wire [5:0] timeIn,
+	input wire player1,
+	input wire player2,
+	output wire [5:0] min1,
+	output wire [5:0] sec1,
+	output wire [5:0] min2,
+	output wire [5:0] sec2
     );
 
-counter counterMin (
-	.clk(clk),
-	.reset(reset),
-	.set(set),
-	.enable(enable),
-	.add(min),
-	.count(minOut)
+divFrec divFrec0 (
+	.clkIn(clk),
+	.clkOut(clkOut)
 );
 
-counter counterSeg (
+ 
+/*wire carry;
+
+counterMin counterMin0 (
 	.clk(clk),
+	.enable(enable),
 	.reset(reset),
 	.set(set),
-	.enable(enable),
-	.add(0),
-	.count(segOut)
+	.add(min),
+	.counter(minOut),
+	.carrySeg(carry)
 );
+
+counterSeg counterSeg0 (
+	.clk(clk),
+	.enable(enable),
+	.reset(reset),
+	.counter(segOut),
+	.carry(carry)
+);*/
 
 endmodule

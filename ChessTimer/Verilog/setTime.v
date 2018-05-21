@@ -4,36 +4,33 @@
 // Students: Christian Camilo Cuestas  Ibanez y Eliana Ortiz García 
 // 
 // Create Date:    08/05/2018 
-// Module Name:     multiplexor
+// Module Name:    setTime 
 // Project Name:  Proyecto Digital I: Reloj de Ajedrez
 // Target Devices: Nexys 4
 // Description:
 //
 //////////////////////////////////////////////////////////////////////////////////
-module multiplexor(
-	input clk,
-	input wire [5:0] min1,
-	input wire [5:0] seg1,
-	input wire [5:0] min2,
-	input wire [5:0] seg2,
-	output wire	[5:0] lcd
+module setTime(
+	input wire enable,
+	input wire add,
+	output wire [5:0] min
     );
 
-/*wire clkOut;
+reg [5:0] minReg;
 
-divFrec #(100) divFrec2 (
-	.enable(1'b1),
-	.clkIn(clk),
-	.clkOut(clkOut)
-);
+initial
+begin
+	minReg <= 6'd5;
+end
 
-LCDmult LDCmult0 (
-	.clk(clkOut),
-	.min1(min1),
-	.seg1(seg1),
-	.min2(min2),
-	.seg2(seg2),
-	.lcd(lcd)
-);*/
+always @(posedge add)
+begin
+	if(enable==1'b1) begin
+		if (minReg == 6'd59) minReg <= 6'd0;
+		else minReg <= minReg + 1'b1;
+	end
+end
+
+assign min = minReg;
 
 endmodule
