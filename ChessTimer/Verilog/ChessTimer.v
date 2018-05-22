@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // University: Universidad Nacional de Colombia
-// Students: Christian Camilo Cuestas  Ibanez y Eliana Ortiz García 
+// Students: Christian Camilo Cuestas Ibanez
 // 
 // Create Date:    08/05/2018 
 // Module Name:    ChessTimer 
@@ -17,7 +17,10 @@ module ChessTimer(
 	input 	wire			set,
 	input 	wire			add,
 	input 	wire [1:0]	sw,
-	output	wire [5:0]	lcd
+	output wire				LCD_RS,
+	output wire				LCD_RW,
+	output wire				LCD_E,
+	output wire	[7:0]		LCD_DB
     );
 
 wire 	setTime;
@@ -39,7 +42,7 @@ control control0 (
 );
 
 setTime setTime0 (
-	.enable(enable),
+	.enable(setTime),
 	.add(add),
 	.min(min)
 );
@@ -48,20 +51,22 @@ countDown countDown0 (
 	.clk(clk),
 	.enable(count),
 	.timeIn(min),
-	.player1(sw[0]),
-	.player2(sw[1]),
+	.player(sw),
 	.min1(min1),
 	.sec1(sec1),
 	.min2(min2),
 	.sec2(sec2)
 );
 
-LCDcontrol LCDcontrol0(
+visualizador visualizador0(
 	.clk(clk),
 	.setTime(setTime),
 	.timeIn(min),
 	.countedTime({min1,sec1,min2,sec2}),
-	.lcd(lcd)
+	.LCD_RS(LCD_RS),
+	.LCD_RW(LCD_RW),
+	.LCD_E(LCD_E),
+	.LCD_DB(LCD_DB)
 );
 
 endmodule

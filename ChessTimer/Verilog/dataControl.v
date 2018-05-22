@@ -4,33 +4,32 @@
 // Students: Christian Camilo Cuestas Ibanez
 // 
 // Create Date:    08/05/2018 
-// Module Name:    setTime 
+// Module Name:    dataControl 
 // Project Name:  Proyecto Digital I: Reloj de Ajedrez
 // Target Devices: Nexys 4
 // Description:
 //
 //////////////////////////////////////////////////////////////////////////////////
-module setTime(
-	input wire enable,
-	input wire add,
-	output wire [5:0] min
+module dataControl(
+	input	wire				setTime,
+	input	wire	[5:0]		timeIn,
+	input	wire	[23:0]	countedTime,
+	output	reg 			done,
+	output	reg [23:0]	dataOut
     );
 
-reg [5:0] minReg;
-
-initial
+always @(setTime)
 begin
-	minReg <= 6'd5;
-end
-
-always @(posedge add)
-begin
-	if(enable==1'b1) begin
-		if (minReg == 6'd59) minReg <= 6'd0;
-		else minReg <= minReg + 1'b1;
+	if(setTime)
+	begin
+		dataOut = {timeIn,6'b000000,timeIn,6'b000000};
+		done = 1;
+	end
+	else
+	begin
+		dataOut = countedTime;
+		done = 1;
 	end
 end
-
-assign min = minReg;
 
 endmodule

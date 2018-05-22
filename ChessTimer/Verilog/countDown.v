@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // University: Universidad Nacional de Colombia
-// Students: Christian Camilo Cuestas  Ibanez y Eliana Ortiz García 
+// Students: Christian Camilo Cuestas Ibanez 
 // 
 // Create Date:    08/05/2018 
 // Module Name:    countDown 
@@ -14,8 +14,7 @@ module countDown(
 	input clk,
 	input wire enable,
 	input wire [5:0] timeIn,
-	input wire player1,
-	input wire player2,
+	input wire [1:0] player,
 	output wire [5:0] min1,
 	output wire [5:0] sec1,
 	output wire [5:0] min2,
@@ -31,12 +30,12 @@ wire reset2;
 
 divFrec divFrec0 (
 	.clkIn(clk),
-	.clkOut(clkOut)
+	.clkOut1(clkOut)
 );
 
 timersControl timersControl0 (
 	.enable(enable),
-	.player({player2,player1}),
+	.player(player),
 	.enable1(enable1),
 	.enable2(enable2),
 	.reset1(reset1),

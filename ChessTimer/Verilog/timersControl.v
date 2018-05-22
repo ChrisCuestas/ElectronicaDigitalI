@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // University: Universidad Nacional de Colombia
-// Students: Christian Camilo Cuestas  Ibanez y Eliana Ortiz García 
+// Students: Christian Camilo Cuestas Ibanez
 // 
 // Create Date:    08/05/2018 
 // Module Name:    timersControl
