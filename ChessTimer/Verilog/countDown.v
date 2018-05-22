@@ -22,30 +22,43 @@ module countDown(
 	output wire [5:0] sec2
     );
 
+wire clkOut;
+
+wire enable1;
+wire enable2;
+wire reset1;
+wire reset2;
+
 divFrec divFrec0 (
 	.clkIn(clk),
 	.clkOut(clkOut)
 );
 
- 
-/*wire carry;
-
-counterMin counterMin0 (
-	.clk(clk),
+timersControl timersControl0 (
 	.enable(enable),
-	.reset(reset),
-	.set(set),
-	.add(min),
-	.counter(minOut),
-	.carrySeg(carry)
+	.player({player2,player1}),
+	.enable1(enable1),
+	.enable2(enable2),
+	.reset1(reset1),
+	.reset2(reset2)
 );
 
-counterSeg counterSeg0 (
-	.clk(clk),
-	.enable(enable),
-	.reset(reset),
-	.counter(segOut),
-	.carry(carry)
-);*/
+counter counter1 (
+	.clk(clkOut),
+	.enable(enable1),
+	.reset(reset1),
+	.TIME(timeIn),
+	.min(min1),
+	.sec(sec1)
+);
+
+counter counter2 (
+	.clk(clkOut),
+	.enable(enable2),
+	.reset(reset2),
+	.TIME(timeIn),
+	.min(min2),
+	.sec(sec2)
+);
 
 endmodule
