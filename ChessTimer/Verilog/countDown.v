@@ -13,12 +13,12 @@
 module countDown(
 	input clk,
 	input wire enable,
-	input wire [5:0] timeIn,
+	input wire [7:0] timeIn,
 	input wire [1:0] player,
-	output wire [5:0] min1,
-	output wire [5:0] sec1,
-	output wire [5:0] min2,
-	output wire [5:0] sec2
+	output wire [7:0] min1,
+	output wire [7:0] sec1,
+	output wire [7:0] min2,
+	output wire [7:0] sec2
     );
 
 wire clkOut;

@@ -13,24 +13,31 @@
 module setTime(
 	input wire enable,
 	input wire add,
-	output wire [5:0] min
+	output reg [7:0] min
     );
 
-reg [5:0] minReg;
+reg [3:0] decReg;
+reg [3:0] uniReg;
 
 initial
 begin
-	minReg <= 6'd5;
+	decReg <= 0;
+	uniReg <= 5;
 end
 
 always @(posedge add)
 begin
-	if(enable==1'b1) begin
-		if (minReg == 6'd59) minReg <= 6'd0;
-		else minReg <= minReg + 1'b1;
+	if (enable==1) begin
+		if (uniReg==9) begin
+			uniReg	<=0;
+			if (decReg==5) begin
+				decReg <=0;
+			end
+			else decReg <= decReg+ 4'd1;
+		end
+		else uniReg <= uniReg + 4'd1;
 	end
+	min <= {decReg,uniReg};
 end
-
-assign min = minReg;
 
 endmodule

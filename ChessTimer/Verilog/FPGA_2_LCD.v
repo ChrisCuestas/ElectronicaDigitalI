@@ -140,7 +140,7 @@ always @(posedge CLK) begin
 			flag_15000us	<=	flag_15000us;
 		end
 		//----------------------------
-		cnt_timer	<= cnt_timer + 1;
+		cnt_timer	<= cnt_timer + 19'd1;
 	end
 end
 
@@ -154,54 +154,54 @@ always @(posedge CLK) begin
 	case(STATE)
 		//---------------------------------------------------------------------------------------
 		0: begin //---------------Initiate Command Sequence (RS=LOW)-----------------------------
-			LCD_RS	<=		1'b0;										//Indicate an instruction is to be sent soon
-			LCD_RW	<= 	1'b0;										//Indicate a write operation
-			LCD_E		<=		1'b0;										//We are in the initial setup, keep low until 250ns has past
-			LCD_DB 	<= 	8'b00000000;
-			RDY					<= 1'b0;								//Indicate that the module is busy
-			SUBSTATE	<=		0;
-			if(!flag_15000us) begin									//WAIT 15ms...worst case scenario
-				STATE				<=	STATE;						//Remain in current STATE
-				flag_rst			<=	1'b0; 						//Start or Continue counting				
+			LCD_RS					<=	1'b0;				//Indicate an instruction is to be sent soon
+			LCD_RW					<= 	1'b0;				//Indicate a write operation
+			LCD_E					<=	1'b0;				//We are in the initial setup, keep low until 250ns has past
+			LCD_DB 					<= 	8'b00000000;
+			RDY					<= 	1'b0;				//Indicate that the module is busy
+			SUBSTATE				<=	0;
+			if(!flag_15000us) begin								//WAIT 15ms...worst case scenario
+				STATE				<=	STATE;					//Remain in current STATE
+				flag_rst			<=	1'b0; 					//Start or Continue counting				
 			end
 			else begin 				
-				STATE				<=	STATE+1;						//Go to next STATE
-				flag_rst			<=	1'b1; 						//Stop counting				
+				STATE				<=	STATE + 4'd1;;				//Go to next STATE
+				flag_rst			<=	1'b1; 					//Stop counting				
 			end		
 		end
 		//---------------------------------------------------------------------------------------
 		1: begin //-----------SET FUNCTION #1, 8-bit interface, 2-line display, 5x7 dots---------
-			LCD_RS				<=	1'b0;						//Indicate an instruction is to be sent soon
-			LCD_RW				<=	1'b0;						//Indicate a write operation
-			RDY					<= 1'b0;						//Indicate that the module is busy
+			LCD_RS					<=	1'b0;				//Indicate an instruction is to be sent soon
+			LCD_RW					<=	1'b0;				//Indicate a write operation
+			RDY					<= 	1'b0;				//Indicate that the module is busy
 			if(SUBSTATE==0)begin	 		
-				LCD_E				<=	1'b0;						//Disable Bus
-				LCD_DB 			<=	LCD_DB;					//Maintain Previous Data on the Bus
+				LCD_E				<=	1'b0;					//Disable Bus
+				LCD_DB 				<=	LCD_DB;					//Maintain Previous Data on the Bus
 				STATE				<=	STATE;					
 				SUBSTATE			<=	1;
 			end			
 			if(SUBSTATE==1)begin				
-				LCD_E				<=	1'b1;						//Enable Bus		
-				LCD_DB 			<= SETUP;					//Data Valid
-				if(!flag_250ns) begin						//WAIT at least 250ns (required for LCD_E)
-					SUBSTATE		<=	SUBSTATE;				//Maintain current SUBSTATE
-					flag_rst		<=	1'b0; 					//Start or Continue counting									
+				LCD_E				<=	1'b1;					//Enable Bus		
+				LCD_DB 				<= 	SETUP;					//Data Valid
+				if(!flag_250ns) begin								//WAIT at least 250ns (required for LCD_E)
+					SUBSTATE		<=	SUBSTATE;					//Maintain current SUBSTATE
+					flag_rst		<=	1'b0; 						//Start or Continue counting
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
-					flag_rst		<=	1'b1; 					//Stop counting					
+					SUBSTATE		<=	SUBSTATE+2'd1;;					//Go to next SUBSTATE
+					flag_rst		<=	1'b1; 						//Stop counting					
 				end
 			end
 			if(SUBSTATE==2)begin
-				LCD_E				<=	1'b0;						//Disable Bus, Triggers LCD to read BUS
-				LCD_DB 			<= LCD_DB;					//Keep Data Valid
-				if(!flag_4100us) begin						//WAIT at least 4.1ms (required for Initialization)
-					STATE			<=	STATE;					//Maintain current STATE
-					SUBSTATE		<=	SUBSTATE;				//Maintain current SUBSTATE
-					flag_rst		<=	1'b0; 					//Start or Continue counting									
+				LCD_E				<=	1'b0;					//Disable Bus, Triggers LCD to read BUS
+				LCD_DB 				<= 	LCD_DB;					//Keep Data Valid
+				if(!flag_4100us) begin								//WAIT at least 4.1ms (required for Initialization)
+					STATE			<=	STATE;						//Maintain current STATE
+					SUBSTATE		<=	SUBSTATE;					//Maintain current SUBSTATE
+					flag_rst		<=	1'b0; 						//Start or Continue counting
 				end
 				else begin 		
-					STATE			<=	STATE+1;					//Go to next STATE
+					STATE			<=	STATE+4'd1;					//Go to next STATE
 					SUBSTATE		<=	0;							//Reset SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
@@ -226,7 +226,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end
@@ -239,7 +239,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 		
-					STATE			<=	STATE+1;					//Go to next STATE
+					STATE			<=	STATE+4'd1;					//Go to next STATE
 					SUBSTATE		<=	0;							//Reset SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
@@ -264,7 +264,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end
@@ -277,7 +277,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 		
-					STATE			<=	STATE+1;					//Go to next STATE
+					STATE			<=	STATE+4'd1;					//Go to next STATE
 					SUBSTATE		<=	0;							//Reset SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
@@ -302,7 +302,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end
@@ -315,7 +315,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 		
-					STATE			<=	STATE+1;					//Go to next STATE
+					STATE			<=	STATE+4'd1;					//Go to next STATE
 					SUBSTATE		<=	0;							//Reset SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
@@ -340,7 +340,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end
@@ -353,7 +353,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 		
-					STATE			<=	STATE+1;					//Go to next STATE
+					STATE			<=	STATE+4'd1;					//Go to next STATE
 					SUBSTATE		<=	0;							//Reset SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
@@ -378,7 +378,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end
@@ -391,7 +391,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 		
-					STATE			<=	STATE+1;					//Go to next STATE
+					STATE			<=	STATE+4'd1;					//Go to next STATE
 					SUBSTATE		<=	0;							//Reset SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
@@ -416,7 +416,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end
@@ -429,7 +429,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 		
-					STATE			<=	STATE+1;					//Go to next STATE
+					STATE			<=	STATE+4'd1;					//Go to next STATE
 					SUBSTATE		<=	0;							//Reset SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
@@ -454,7 +454,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end
@@ -467,7 +467,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 		
-					STATE			<=	STATE+1;					//Go to next STATE
+					STATE			<=	STATE+4'd1;					//Go to next STATE
 					SUBSTATE		<=	0;							//Reset SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
@@ -492,7 +492,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end
@@ -530,7 +530,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end
@@ -568,7 +568,7 @@ always @(posedge CLK) begin
 					flag_rst		<=	1'b0; 					//Start or Continue counting									
 				end
 				else begin 				
-					SUBSTATE		<=	SUBSTATE+1;				//Go to next SUBSTATE
+					SUBSTATE		<=	SUBSTATE+2'd1;				//Go to next SUBSTATE
 					flag_rst		<=	1'b1; 					//Stop counting					
 				end
 			end

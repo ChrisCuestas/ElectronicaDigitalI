@@ -13,8 +13,8 @@
 module visualizador(
 	input	wire				clk,
 	input	wire				setTime,
-	input	wire	[5:0]		timeIn,
-	input	wire	[23:0]	countedTime,
+	input	wire	[7:0]		timeIn,
+	input	wire	[31:0]	countedTime,
 	output wire				LCD_RS,
 	output wire				LCD_RW,
 	output wire				LCD_E,
@@ -23,11 +23,11 @@ module visualizador(
 
 wire clkOut; 
 
-wire 	dReady;
-wire	dataIn;
+wire	[31:0]	dataIn;
 
 wire	ldcReady;
-wire	dataOut;
+wire	[7:0]	dataOut;
+wire	[1:0]	OPER;
 	 
 divFrec divFrec1 (
 	.clkIn(clk),
@@ -38,15 +38,13 @@ dataControl dataControl0(
 	.setTime(setTime),
 	.timeIn(timeIn),
 	.countedTime(countedTime),
-	.done(dReady),
 	.dataOut(dataIn)
 );
 
-serial2Paralel serial2Paralel(
+dataSender dataSender0(
 	.clk(clkOut),
-	.dReady(dReady),
 	.dataIn(dataIn),
-	.ldcReady(ldcReady),
+	.lcdReady(lcdReady),
 	.dataOut(dataOut),
 	.OPER(OPER),
 	.ENB(ENB),
@@ -59,7 +57,7 @@ FPGA_2_LCD FPGA2LCD0 (
 	.LCD_RW(LCD_RW), 
 	.LCD_E(LCD_E), 
 	.LCD_DB(LCD_DB), 
-	.RDY(ldcReady), 
+	.RDY(lcdReady), 
 	.DATA(dataOut), 
 	.OPER(OPER), 
 	.ENB(ENB), 

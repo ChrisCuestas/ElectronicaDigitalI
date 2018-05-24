@@ -26,12 +26,12 @@ module ChessTimer(
 wire 	setTime;
 wire	count;
 
-wire [5:0] min;
+wire [7:0] min;
 
-wire [5:0] min1;
-wire [5:0] sec1;
-wire [5:0] min2;
-wire [5:0] sec2;
+wire [7:0] min1;
+wire [7:0] sec1;
+wire [7:0] min2;
+wire [7:0] sec2;
 
 control control0 (
 	.enable(enable),
