@@ -3,7 +3,6 @@ Proyecto de Electrónica Digital I / 2018-01
 
 ## Integrantes
 - Christian Camilo Cuestas Ibáñez 
-- Eliana Ortiz García
 
 Este preinforme presenta los requerimientos básicos, y las mejoras planteadas para diseñar un Reloj de ajedrez, con el cual el usuario podrá establecer tiempos de partidas desde 1 minuto hasta 60 minutos. 
 
